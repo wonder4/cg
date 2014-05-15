@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/template/ftl/" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="freeMarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="/template/ftl/" />
+	</bean>
+
+	<bean id="templateService" class="com.ebiz.baida.middle.service.impl.TemplateServiceFreeMarkerImpl">
+		<property name="freeMarkerConfigurer" ref="freeMarkerConfigurer" />
+		<property name="freeMarkerConfiguration" ref="freeMarkerConfiguration" />
+	</bean>
+
+	<bean id="propertiesConfig" class="com.ebiz.baida.middle.domain.PropertiesConfig">
+		<property name="jdbc_driverClassName" value="${jdbc.driverClassName}" />
+		<property name="jdbc_url" value="${jdbc.url}" />
+		<property name="jdbc_username" value="${jdbc.username}" />
+		<property name="jdbc_password" value="${jdbc.password}" />
+		<property name="table_schema" value="${table_schema}" />
+		<property name="autogc_config_output_project_name" value="${autogc.config.output.project.name}" />
+		<property name="autogc_config_output_alltables" value="${autogc.config.output.alltables}" />
+		<property name="autogc_config_output_table_names" value="${autogc.config.output.table.names}" />
+		<property name="autogc_config_output_table_querysql" value="${autogc.config.output.table.querysql}" />
+		<property name="project_base_directory" value="${project.base.directory}" />
+		<property name="project_base_package" value="${project.base.package}" />
+		<property name="autogc_config_output_base_directory" value="${autogc.config.output.base.directory}" />
+		<property name="project_generator_jsp_files" value="${project.generator.jsp.files}" />
+	</bean>
+
+	<bean id="ftlPahtConfig" class="com.ebiz.baida.middle.domain.FtlPathConfig">
+		<property name="dao_ftl_path" value="${dao.ftl.path}" />
+		<property name="domain_ftl_path" value="${domain.ftl.path}" />
+		<property name="daoSqlMapImpl_ftl_path" value="${daoSqlMapImpl.ftl.path}" />
+		<property name="maps_ftl_path" value="${maps.ftl.path}" />
+		<property name="service_ftl_path" value="${service.ftl.path}" />
+		<property name="serviceImpl_ftl_path" value="${serviceImpl.ftl.path}" />
+		<property name="facade_ftl_path" value="${facade.ftl.path}" />
+		<property name="facadeImpl_ftl_path" value="${facadeImpl.ftl.path}" />
+		<property name="sqlmapConfig_ftl_path" value="${sqlmapConfig.ftl.path}" />
+		<property name="action_ftl_path" value="${action.ftl.path}" />
+		<property name="jsp_form_ftl_path" value="${jsp.form.ftl.path}" /> 
+		<property name="jsp_view_ftl_path" value="${jsp.view.ftl.path}" />
+		<property name="jsp_list_ftl_path" value="${jsp.list.ftl.path}" />
+	</bean>
+
+</beans>

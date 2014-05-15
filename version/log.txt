@@ -1,0 +1,111 @@
+-- version 2.6 待开发 
+1、增加个配置开关，标识在三个页面默认是否显所有示字段
+
+
+
+-- version 2.5 (2013.12)，此次更改都是针对于v4版本的（只针对oracle进行了测试）
+1、需要根据order_value进行排序【已处理】
+2、如果是排序值或数字型的要居右显示【已处理】
+3、字段长度超过3位时长度会有逗号，如4000就变成了4,000【已处理】
+4、如果是字段类型是数字的话长度会有问题。【已处理】
+5、add方法里判断下如果有order_value字段则设置默认值，list方法里如果存在is_del字段则添加查0的条件【已处理】
+6、ibatis文件删除方法里如果存在is_del字段则删除方法改为set is_del=1的操作【已处理】
+7、新增及更新方法里日期使用datatime类型，精确到时分秒【已处理】
+8、save方法里对添加人、添加时间等这些默认的进行赋值。【已处理】
+9、代码生成后打开生成目录，生成的目录增加时间戳。【已处理】
+
+
+
+-- version 2.4 (2013.8)
+1、增加view页面的生成代码，并对list及后台的action作相应的修改；
+2、对部分ftl文件的名称进行调整，并对配置文件也作相应修改；
+3、增加简单测试表，以Oracle为例：
+	drop table USER_TEST cascade constraints;
+	
+	create table USER_TEST (
+	   ID                   NUMBER(16)                      not null,
+	   USER_NAME            VARCHAR2(100)                   not null,
+	   REAL_NAME            VARCHAR(60),
+	   SEX                  NUMBER(2),
+	   AGE                  NUMBER(4)                      default 0,
+	   EDUCATION            VARCHAR2(60),
+	   BIRTH_YEAR           DATE,
+	   USER_DESC            VARCHAR2(255),
+	   constraint PK_USER_TEST primary key (ID)
+	);
+	
+	comment on column USER_TEST.ID is
+	'ID[acg:l0,f0,q0]';
+	comment on column USER_TEST.USER_NAME is
+	'用户名[acg:q1]';
+	comment on column USER_TEST.REAL_NAME is
+	'真实姓名[acg:q1]';
+	comment on column USER_TEST.SEX is
+	'性别[acg:q0,radio{0:男,1:女}]';
+	comment on column USER_TEST.AGE is
+	'年龄[acg:q0]';
+	comment on column USER_TEST.EDUCATION is
+	'文化程度[acg:q0,select{小学:小学,中学:中学,大学:大学}]';
+	comment on column USER_TEST.BIRTH_YEAR is
+	'出生年份[acg:q0]';
+	comment on column USER_TEST.USER_DESC is
+	'备注[acg:textarea,q0]';
+	
+	-- SEQUENCE
+	create sequence SEQ_USER_TEST
+	increment by 1
+	start with 1
+	maxvalue 999999999999999
+	minvalue 1
+	cache 20;
+
+
+
+-- version 2.3 (2013.7)
+1、增加简单测试表，以MySql为例：
+	drop table if exists USER_TEST;
+	
+	/*==============================================================*/
+	/* Table: USER_TEST                                             */
+	/*==============================================================*/
+	create table USER_TEST
+	(
+	   ID                   int(16) not null auto_increment comment 'ID[acg:l0,f0,q0]',
+	   USER_NAME            varchar(60) not null comment '用户名[acg:q1]',
+	   REAL_NAME            varchar(60) comment '真实姓名[acg:q1]',
+	   SEX                  int(2) comment '性别[acg:q0,radio{0:男,1:女}]',
+	   AGE                  int(3) comment '年龄[acg:q0]',
+	   EDUCATION            varchar(60) comment '文化程度[acg:q0,select{小学:小学,中学:中学,大学:大学}]',
+	   BIRTH_YEAR           timestamp comment '出生年份[acg:q0]',
+	   USER_DESC            varchar(255) comment '备注[acg:textarea,q0]',
+	   primary key (ID)
+	);
+2、增加了数据库数字类型转java类型的处理，根据不同数据库转不同的Java代码。如mysql时int转Integer，oracle时int转Long。
+3、对int不同的java类型，action中代码作相应的处理。
+4、TableInfo类中的db_type字段暂时没有用到，如果要区分数据库类型的话可以用 generateCodeConfig 中的字段来区分。
+5、对action增加了版本选择功能。
+6、对项目配置里面增加了jsp、action生成的版本选择，并对其进行了测试。
+7、增加了根据cms版本生成对应的jsp与action。
+8、增加MySql中的LONGTEXT数据转换Java类型以及对应的Ibatis类型。
+9、删除了多余的目录及配置代码。
+
+
+
+-- version 2.2 (2012.3)
+1、对生成器顶部的版本英文进行修改，对作者后面增加邮箱地址，对XML注释的位置调整会格式化后的位置。
+2、对JSP页面的样式进行修改。使用最新的蓝色基调的后台样式。并增加了基础文件中的样式文件，并可在多个版本之间切换生成的JSP页面样式。
+3、增加JSP页面生成的控制器。可以设置在生成后台代码时是否同时生成JSP页面
+4、对JSP页面及SqlMap文件中的ID进行修改，将原来写死的ID值改成表格的第一列字段。减少修改量。
+5、在JSP页面中增加对数字、日期字段的特殊处理，增加自动格式化日期、自动生成日历控件、自动增加对数字输入的验证等。
+6、更改代码的样式，使其尽量接近格式化后的样式。
+7、在数据库comment中增加代码生成器特殊标记，方便生成需要的代码，具体如下：
+	comment在最后写下如下代码
+		[acg:l0,f0,q0,checkbox{1:选项一,2:选项二,3:选项三}]
+		其中，[acg: ...]这个是固定格式，不能更改，否则生成器无法识别
+		l0:list页面(即列表页面)不显示该列
+		f0:form页面(即表单页面)不显示该列
+		q0:query模块(即列表上部的查询模块)不显示该列
+		q1:模糊查询
+		checkbox:html中控件类型，目前实现的有checkbox, radio, select, textarea和input，其中input为转为的控制类型，当不指定时即生成input控件
+		{1:选项一,2:选项二,3:选项三}:这个是补充前面控件的值，格式为json格式，前为控件值后为控件显示文字
+8、增加了模糊查询的前后台及XML文件中代码		

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>ftl-path.properties</value>
+				<!--<value>z_project_properties/tjgis.properties</value>-->
+				<!--<value>z_project_properties/mmt.properties</value>-->
+				<!--<value>z_project_properties/hncslt.properties</value>-->
+				<!--<value>z_project_properties/zywx.properties</value>-->
+				<!--<value>z_project_properties/ahtourism.properties</value>-->
+				<!--<value>z_project_properties/jdxxsspt.properties</value>-->
+				<!--<value>z_project_properties/xbd.properties</value>-->
+				<!--<value>z_project_properties/konka.properties</value>-->
+				<!--<value>z_project_properties/neccoa.properties</value>-->
+				<!--<value>z_project_properties/_example_oracle.properties</value>-->
+				<!--
+				<value>z_project_properties/cqsmfw.properties</value>
+				<value>z_project_properties/smtj2012.properties</value>
+				-->
+				<value>z_project_properties/wj.properties</value>
+			</list>
+		</property>
+	</bean>
+</beans>
