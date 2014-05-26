@@ -19,8 +19,9 @@
 				<!--
 				<value>z_project_properties/cqsmfw.properties</value>
 				<value>z_project_properties/smtj2012.properties</value>
-				-->
 				<value>z_project_properties/wj.properties</value>
+				-->
+				<value>z_project_properties/neccoa.properties</value>
 			</list>
 		</property>
 	</bean>
